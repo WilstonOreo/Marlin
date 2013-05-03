@@ -1717,18 +1717,33 @@ void clamp_to_software_endstops(float target[3])
 
 void calculate_delta(float cartesian[3])
 {
-  delta[X_AXIS] = sqrt(sq(DELTA_DIAGONAL_ROD)
-                       - sq(DELTA_TOWER1_X-cartesian[X_AXIS])
-                       - sq(DELTA_TOWER1_Y-cartesian[Y_AXIS])
-                       ) + cartesian[Z_AXIS];
-  delta[Y_AXIS] = sqrt(sq(DELTA_DIAGONAL_ROD)
-                       - sq(DELTA_TOWER2_X-cartesian[X_AXIS])
-                       - sq(DELTA_TOWER2_Y-cartesian[Y_AXIS])
-                       ) + cartesian[Z_AXIS];
-  delta[Z_AXIS] = sqrt(sq(DELTA_DIAGONAL_ROD)
-                       - sq(DELTA_TOWER3_X-cartesian[X_AXIS])
-                       - sq(DELTA_TOWER3_Y-cartesian[Y_AXIS])
-                       ) + cartesian[Z_AXIS];
+  float sq[3];
+  sq[X_AXIS] = sq(DELTA_DIAGONAL_ROD)
+                  - sq(DELTA_TOWER1_X-cartesian[X_AXIS])
+                  - sq(DELTA_TOWER1_Y-cartesian[Y_AXIS]);
+  sq[Y_AXIS] = sq(DELTA_DIAGONAL_ROD)
+                  - sq(DELTA_TOWER2_X-cartesian[X_AXIS]);
+                  - sq(DELTA_TOWER2_Y-cartesian[Y_AXIS]);
+
+  sq[Z_AXIS] = sq(DELTA_DIAGONAL_ROD)
+                  - sq(DELTA_TOWER3_X-cartesian[X_AXIS])
+                  - sq(DELTA_TOWER3_Y-cartesian[Y_AXIS]);
+
+  for (int i = X_AXIS; i <= Z_AXIS; i++)
+  {
+    if (sq[i] < 0)
+    {
+      SERIAL_ECHOPGM("Warning Delta Below Zero: ");
+      SERIAL_ECHO(i);
+      SERIAL_ECHO(" = ");
+      SERIAL_ECHO(sq[i]);
+      sq[i] = 0;
+    }
+  }
+
+  delta[X_AXIS] = sqrt(sq[X_AXIS]) + cartesian[Z_AXIS];
+  delta[Y_AXIS] = sqrt(sq[Y_AXIS]) + cartesian[Z_AXIS];
+  delta[Z_AXIS] = sqrt(sq[Z_AXIS]) + cartesian[Z_AXIS];
   /*
   SERIAL_ECHOPGM("cartesian x="); SERIAL_ECHO(cartesian[X_AXIS]);
   SERIAL_ECHOPGM(" y="); SERIAL_ECHO(cartesian[Y_AXIS]);

@@ -924,7 +924,8 @@ void process_commands()
          }
 	 card.removeFile(strchr_pointer + 4);
 	}
-	break;
+	
+  break;
 	
 #endif //SDSUPPORT
 
@@ -1531,6 +1532,40 @@ void process_commands()
       #endif
     }
     break;
+
+    // Custom M-Codes for Rostock axis adjusting (change by WilstonOreo)
+    case 444:
+      code_seen('S');
+      SERIAL_PROTOCOL("Delta Segments per Second = ");
+      DELTA_SEGMENTS_PER_SECOND = (int)code_value();
+      SERIAL_PROTOCOL(DELTA_SEGMENTS_PER_SECOND);
+      break;
+    case 445:
+      code_seen('S');
+      SERIAL_PROTOCOL("Delta Diagonal Rod = ");
+      DELTA_DIAGONAL_ROD = code_value();
+      SERIAL_PROTOCOL(DELTA_DIAGONAL_ROD);
+      break;
+    case 446:
+      code_seen('S');
+      SERIAL_PROTOCOL("Delta Smooth Rod Offset = ");
+      DELTA_SMOOTH_ROD_OFFSET = code_value();
+      SERIAL_PROTOCOL(DELTA_SMOOTH_ROD_OFFSET);
+      break;
+    case 447:
+      code_seen('S');
+      SERIAL_PROTOCOL("Delta Effector Offset = ");
+      DELTA_EFFECTOR_OFFSET = code_value();
+      SERIAL_PROTOCOL(DELTA_EFFECTOR_OFFSET);
+      break;
+    case 448:
+      code_seen('S');
+      SERIAL_PROTOCOL("Delta Carriange Offset = ");
+      DELTA_CARRIAGE_OFFSET = code_value();
+      SERIAL_PROTOCOL(DELTA_CARRIAGE_OFFSET);
+      break;
+
+    // end Custom M-Codes for axis adjusting (change by WilstonOreo)
     case 999: // M999: Restart after being stopped
       Stopped = false;
       lcd_reset_alert_level();

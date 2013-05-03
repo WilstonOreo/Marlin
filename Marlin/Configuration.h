@@ -46,13 +46,13 @@
 // 301 = Rambo
 
 #ifndef MOTHERBOARD
-#define MOTHERBOARD 33
+#define MOTHERBOARD 81
 #endif
 
 //===========================================================================
 //============================== Delta Settings =============================
 //===========================================================================
-
+/*
 // Make delta curves from many straight lines (linear interpolation).
 // This is a trade-off between visible corners (not enough segments)
 // and processor overload (too many expensive sqrt calls).
@@ -62,13 +62,23 @@
 #define DELTA_DIAGONAL_ROD 250.0 // mm
 
 // Horizontal offset from middle of printer to smooth rod center.
-#define DELTA_SMOOTH_ROD_OFFSET 175.0 // mm
+#define DELTA_SMOOTH_ROD_OFFSET 180 // mm
 
 // Horizontal offset of the universal joints on the end effector.
 #define DELTA_EFFECTOR_OFFSET 33.0 // mm
 
 // Horizontal offset of the universal joints on the carriages.
 #define DELTA_CARRIAGE_OFFSET 18.0 // mm
+*/
+
+// Custom M-Codes for Rostock axis adjusting (change by WilstonOreo)
+static int DELTA_SEGMENTS_PER_SECOND = 200;
+static float DELTA_DIAGONAL_ROD = 250.0;
+static float DELTA_SMOOTH_ROD_OFFSET = 180.0;
+static float DELTA_EFFECTOR_OFFSET = 50.0;
+static float DELTA_CARRIAGE_OFFSET = 18.0;
+// end Custom M-Codes for Rostock axis adjusting (change by WilstonOreo)
+
 
 // Effective horizontal distance bridged by diagonal push rods.
 #define DELTA_RADIUS (DELTA_SMOOTH_ROD_OFFSET-DELTA_EFFECTOR_OFFSET-DELTA_CARRIAGE_OFFSET)
@@ -107,7 +117,7 @@
 // 52 is 200k thermistor - ATC Semitec 204GT-2 (1k pullup)
 // 55 is 100k thermistor - ATC Semitec 104GT-2 (Used in ParCan) (1k pullup)
 
-#define TEMP_SENSOR_0 1
+#define TEMP_SENSOR_0 0 //WOchange: was 1
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_BED 0
@@ -245,9 +255,9 @@
 #endif
 
 // The pullups are needed if you directly connect a mechanical endswitch between the signal and ground pins.
-const bool X_ENDSTOPS_INVERTING = false; // set to true to invert the logic of the endstops.
-const bool Y_ENDSTOPS_INVERTING = false; // set to true to invert the logic of the endstops.
-const bool Z_ENDSTOPS_INVERTING = false; // set to true to invert the logic of the endstops.
+const bool X_ENDSTOPS_INVERTING = true; // WOchange: false // set to true to invert the logic of the endstops.
+const bool Y_ENDSTOPS_INVERTING = true; // WOchange: false // set to true to invert the logic of the endstops.
+const bool Z_ENDSTOPS_INVERTING = true; // WOchange: false // set to true to invert the logic of the endstops.
 //#define DISABLE_MAX_ENDSTOPS
 
 // For Inverting Stepper Enable Pins (Active Low) use 0, Non Inverting (Active High) use 1
@@ -264,7 +274,7 @@ const bool Z_ENDSTOPS_INVERTING = false; // set to true to invert the logic of t
 
 #define INVERT_X_DIR false    // for Mendel set to false, for Orca set to true
 #define INVERT_Y_DIR false    // for Mendel set to true, for Orca set to false
-#define INVERT_Z_DIR false    // for Mendel set to false, for Orca set to true
+#define INVERT_Z_DIR true // WOchange: was 'false' // for Mendel set to false, for Orca set to true
 #define INVERT_E0_DIR false   // for direct drive extruder v9 set to true, for geared extruder set to false
 #define INVERT_E1_DIR false   // for direct drive extruder v9 set to true, for geared extruder set to false
 #define INVERT_E2_DIR false   // for direct drive extruder v9 set to true, for geared extruder set to false
@@ -275,8 +285,8 @@ const bool Z_ENDSTOPS_INVERTING = false; // set to true to invert the logic of t
 #define Y_HOME_DIR 1
 #define Z_HOME_DIR 1
 
-#define min_software_endstops true //If true, axis won't move to coordinates less than *_MIN_POS.
-#define max_software_endstops true //If true, axis won't move to coordinates greater than *_MAX_POS.
+#define min_software_endstops false // WOchange: true //If true, axis won't move to coordinates less than *_MIN_POS.
+#define max_software_endstops false // WOchange: true //If true, axis won't move to coordinates greater than *_MAX_POS.
 
 #define X_MAX_POS 90
 #define X_MIN_POS -90

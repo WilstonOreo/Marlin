@@ -1535,36 +1535,29 @@ void process_commands()
 
     // Custom M-Codes for Rostock axis adjusting (change by WilstonOreo)
     case 444:
-      code_seen('S');
-      SERIAL_PROTOCOL("Delta Segments per Second = ");
+      code_seen('A');
       DELTA_SEGMENTS_PER_SECOND = (int)code_value();
-      SERIAL_PROTOCOL(DELTA_SEGMENTS_PER_SECOND);
-      break;
-    case 445:
-      code_seen('S');
-      SERIAL_PROTOCOL("Delta Diagonal Rod = ");
+      code_seen('B');
       DELTA_DIAGONAL_ROD = code_value();
-      SERIAL_PROTOCOL(DELTA_DIAGONAL_ROD);
-      break;
-    case 446:
-      code_seen('S');
-      SERIAL_PROTOCOL("Delta Smooth Rod Offset = ");
+      code_seen('C');
       DELTA_SMOOTH_ROD_OFFSET = code_value();
-      SERIAL_PROTOCOL(DELTA_SMOOTH_ROD_OFFSET);
-      break;
-    case 447:
-      code_seen('S');
-      SERIAL_PROTOCOL("Delta Effector Offset = ");
+      code_seen('D');
       DELTA_EFFECTOR_OFFSET = code_value();
-      SERIAL_PROTOCOL(DELTA_EFFECTOR_OFFSET);
-      break;
-    case 448:
-      code_seen('S');
-      SERIAL_PROTOCOL("Delta Carriange Offset = ");
+      code_seen('E');
       DELTA_CARRIAGE_OFFSET = code_value();
+
+    case 333:
+      SERIAL_PROTOCOL("Delta Segments per Second (A) = ");
+      SERIAL_PROTOCOL(DELTA_SEGMENTS_PER_SECOND);
+      SERIAL_PROTOCOL("Delta Diagonal Rod (B) = ");
+      SERIAL_PROTOCOL(DELTA_DIAGONAL_ROD);
+      SERIAL_PROTOCOL("Delta Smooth Rod Offset (C) = ");
+      SERIAL_PROTOCOL(DELTA_SMOOTH_ROD_OFFSET);
+      SERIAL_PROTOCOL("Delta Effector Offset (D) = ");
+      SERIAL_PROTOCOL(DELTA_EFFECTOR_OFFSET);
+      SERIAL_PROTOCOL("Delta Carriage Offset (E) = ");
       SERIAL_PROTOCOL(DELTA_CARRIAGE_OFFSET);
       break;
-
     // end Custom M-Codes for axis adjusting (change by WilstonOreo)
     case 999: // M999: Restart after being stopped
       Stopped = false;
